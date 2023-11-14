@@ -51,7 +51,7 @@ namespace TestProject1
         [TestCase(2, 3, ExpectedResult = 98)]
         [TestCase(2, 3, 2, ExpectedResult = 23)]
         [TestCase(2, 3, 6, ExpectedResult = 83)]
-        public long Solve_ReturnsCorrectResult(params long[] a)
+        public long ChineseRemainderTheorem_Test(params long[] a)
         {
             long[] m = { 3, 5, 7 }; // Adjust moduli as needed
             return Task2.ChineseRemainderTheorem_Solve(a, m);
