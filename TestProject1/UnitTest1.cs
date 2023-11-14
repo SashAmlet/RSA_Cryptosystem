@@ -155,23 +155,35 @@ namespace TestProject1
         #endregion;
 
         #region Task8
-        [TestCase("10235", ExpectedResult = "10235")]
-        [TestCase("123456", ExpectedResult = "123456")]
-        [TestCase("99999", ExpectedResult = "99999")]
-        [TestCase("4244638087073", ExpectedResult = "4244638087073")]
-        [TestCase("6790566624859", ExpectedResult = "6790566624859")]
-        [TestCase("7294429081243", ExpectedResult = "7294429081243")]
-        [TestCase("22806868983211", ExpectedResult = "22806868983211")]
-        [TestCase("27280753292489", ExpectedResult = "27280753292489")]
+        [TestCase("BILBOBEGIND", ExpectedResult = "BILBOBEGIND")]
+        [TestCase("ABCDEFG", ExpectedResult = "ABCDEFG")]
+        [TestCase("SDFGHSDKHGS", ExpectedResult = "SDFGHSDKHGS")]
         public string RSA_Test(string sentStr)
         {
-            BigInteger sent = BigInteger.Parse(sentStr);
-            BigInteger p = 499, q = 631;
+            BigInteger sent = Helper.LatinToDecimal(sentStr);// BigInteger.Parse(sentStr);
+            //string sentS = Helper.DecimalToLatin(sent);
+            BigInteger p = 11319539847619, q = 20903554545451;
 
             RSAcryptosystem Bob = new(p, q), Alice = new(Bob.publicKey);
-            BigInteger encode = Alice.ToEncode(sent);
-            BigInteger decode = Bob.ToDecode(encode);
-            return decode.ToString();
+            BigInteger encrypt = Alice.ToEncrypt(sent);
+            BigInteger decrypt = Bob.ToDecrypt(encrypt);
+            return Helper.DecimalToLatin(decrypt);//decrypt.ToString();
+        }
+        #endregion
+
+        #region Task9
+        [TestCase("BILBOBEGIND", ExpectedResult = "BILBOBEGIND")]
+        [TestCase("ABCDEFG", ExpectedResult = "ABCDEFG")]
+        [TestCase("SDFGHSDKHGS", ExpectedResult = "SDFGHSDKHGS")]
+        public string ELGamal_Test(string sentStr)
+        {
+            BigInteger sent = Helper.LatinToDecimal(sentStr); // BigInteger sent = BigInteger.Parse(sentStr);
+            BigInteger q = 258;//20903554545451;
+
+            ElGamalEncryption Bob = new(q), Alice = new(Bob.publicKey);
+            (BigInteger, BigInteger) encrypt = Alice.ToEncrypt(sent);
+            BigInteger decrypt = Bob.ToDecrypt(encrypt);
+            return Helper.DecimalToLatin(decrypt); //decrypt.ToString();
         }
         #endregion
     }

@@ -48,25 +48,17 @@ namespace ConsoleApp1
             return false;
         }
 
-        public BigInteger ToEncode(BigInteger message)
+        public BigInteger ToEncrypt(BigInteger message)
         {
-            if (publicKey.Item2 > int.MaxValue)
-            {
-                throw new Exception("ERROR");
-            }
-            return BigInteger.Pow(message, (int)publicKey.Item2) % publicKey.Item1;
+            return BigInteger.ModPow(message, publicKey.Item2, publicKey.Item1);
         }
 
-        public BigInteger ToDecode(BigInteger encodedMessage)
+        public BigInteger ToDecrypt(BigInteger encodedMessage)
         {
-            if (secretKey > int.MaxValue)
-            {
-                throw new Exception("ERROR");
-            }
-            return BigInteger.Pow(encodedMessage, (int)secretKey) % publicKey.Item1;
+            return BigInteger.ModPow(encodedMessage, secretKey, publicKey.Item1);
         }
 
-        private BigInteger FindGCD(BigInteger a, BigInteger b)
+        public static BigInteger FindGCD(BigInteger a, BigInteger b)
         {
             while (b != 0)
             {
